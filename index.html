@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MediaGo Test Landing Page</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 16px;line-height:1.6}
+    .card{border:1px solid #ddd;border-radius:12px;padding:18px;margin:12px 0}
+    .btn{display:inline-block;padding:10px 14px;border-radius:8px;border:1px solid #333;text-decoration:none}
+    input,button{padding:10px;border-radius:8px;border:1px solid #ccc}
+    code{background:#f7f7f7;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <h1>MediaGo Test Site — Landing Page</h1>
+  <p>This page simulates an advertiser's landing page. It preserves <code>tracking_id</code> in the URL and forwards it to the thank‑you pages.</p>
+
+  <div class="card">
+    <h3>1) Tracking ID</h3>
+    <p>MediaGo will append <code>tracking_id</code> automatically when the ad is clicked. If you're testing manually, set it here:</p>
+    <input id="tid" placeholder="tracking_id" style="min-width:320px"/>
+    <button onclick="randomize()">Generate test id</button>
+    <script>
+      const qs = new URLSearchParams(location.search);
+      const input = document.getElementById('tid');
+      function randomize(){
+        input.value = 'test_' + Math.random().toString(36).slice(2,10);
+      }
+      input.value = qs.get('tracking_id') || 'test_' + Math.random().toString(36).slice(2,10);
+    </script>
+  </div>
+
+  <div class="card">
+    <h3>2) Continue to conversion (choose one)</h3>
+    <p>These links pass the <code>tracking_id</code> through to the conversion page:</p>
+    <p>
+      <a class="btn" id="pixelLink" href="#">Go to Thank You — Pixel</a>
+      &nbsp;&nbsp;
+      <a class="btn" id="postbackLink" href="#">Go to Thank You — Postback</a>
+    </p>
+    <script>
+      function updateLinks(){
+        const id = encodeURIComponent(input.value.trim());
+        const base = location.pathname.replace(/\/[^\/]*$/, '/');
+        document.getElementById('pixelLink').href = base + 'thankyou-pixel.html?tracking_id=' + id + '&event=signup&value=1';
+        document.getElementById('postbackLink').href = base + 'thankyou-postback.html?tracking_id=' + id + '&event=signup&value=1';
+      }
+      input.addEventListener('input', updateLinks);
+      updateLinks();
+    </script>
+  </div>
+
+  <div class="card">
+    <h3>Notes</h3>
+    <ul>
+      <li>This is a static demo for learning the flow. Replace the thank‑you pages with your live pixel/postback once you're ready.</li>
+      <li>When running a real MediaGo campaign, you only provide your <em>landing page</em>; MediaGo appends tracking parameters automatically.</li>
+    </ul>
+  </div>
+</body>
+</html>
