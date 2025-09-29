@@ -14,12 +14,22 @@
   <h1>Conversion Complete — Pixel Flow</h1>
   <p>This page simulates an advertiser's <em>thank‑you page</em> where a MediaGo <strong>pixel</strong> would fire.</p>
 
-  <div class="box">
-    <h3>Pixel firing</h3>
-    <p>Tracking ID detected: <code id="tid">N/A</code></p>
-    <p>Pixel URL used: <code id="pxUrl">Please configure PIXEL_URL_TEMPLATE in the HTML</code></p>
-    <img id="mediagoPixel" src="" alt="" style="display:none"/>
-  </div>
+<!-- ✅ MediaGo Pixel Code -->
+<script type='text/javascript'>
+    window._megoaa = window._megoaa || [];
+    window._megoaa.push({ type: 'event', name: 'pageview', acid: '31906'});
+    window._megoaa.push({ type: 'nextjump', link: ["yuchitang0218-dotcom.github.io"]});
+    !function (t, f, a, x) {
+            if (!document.getElementById(x)) {
+                t.async = 1; t.src = a; t.id=x; f.parentNode.insertBefore(t, f);
+            }
+    }(document.createElement('script'),
+    document.getElementsByTagName('script')[0], '//cdn.mediago.io/js/pixel.js?acid=31906', 'pixel_megoaa_script');
+</script>
+<noscript>
+    <img src='//trace.mediago.io/api/bidder/track/pixel/pageview?tn=f9f2b1ef23fe2759c2cad0953029a94b&acid=31906' width='0' height='0' style='display:none' />
+</noscript>
+<!-- ✅ End of MediaGo Pixel Code -->
 
   <div class="box">
     <h3>How to use this page for a real test</h3>
