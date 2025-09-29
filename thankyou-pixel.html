@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thank You — Pixel Demo</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 16px;line-height:1.6}
+    .box{border:1px solid #ddd;border-radius:12px;padding:18px;margin:12px 0}
+    code{background:#f7f7f7;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <h1>Conversion Complete — Pixel Flow</h1>
+  <p>This page simulates an advertiser's <em>thank‑you page</em> where a MediaGo <strong>pixel</strong> would fire.</p>
+
+  <div class="box">
+    <h3>Pixel firing</h3>
+    <p>Tracking ID detected: <code id="tid">N/A</code></p>
+    <p>Pixel URL used: <code id="pxUrl">Please configure PIXEL_URL_TEMPLATE in the HTML</code></p>
+    <img id="mediagoPixel" src="" alt="" style="display:none"/>
+  </div>
+
+  <div class="box">
+    <h3>How to use this page for a real test</h3>
+    <ol>
+      <li>From MediaGo, go to <strong>Conversion Tracking → Pixel</strong> and create a conversion.</li>
+      <li>Copy the pixel URL/snippet that MediaGo provides.</li>
+      <li>In this file, replace <code>PIXEL_URL_TEMPLATE</code> with your real pixel URL template (it should contain a placeholder <code>{tracking_id}</code>).</li>
+      <li>When opened with <code>?tracking_id=...</code>, this page will swap the placeholder and request the pixel URL automatically.</li>
+    </ol>
+  </div>
+
+  <script>
+    const sp = new URLSearchParams(location.search);
+    const trackingId = sp.get('tracking_id') || 'missing_tracking_id';
+    document.getElementById('tid').textContent = trackingId;
+
+    // TODO: Replace the template below with the real one from MediaGo Pixel setup.
+    // Example form (your real URL may differ):
+    // const PIXEL_URL_TEMPLATE = 'https://YOUR-PIXEL-ENDPOINT?tracking_id={tracking_id}&event=signup';
+    const PIXEL_URL_TEMPLATE = 'https://YOUR-PIXEL-ENDPOINT?tracking_id={tracking_id}&event=signup';
+
+    const pixelUrl = PIXEL_URL_TEMPLATE.replace('{tracking_id}', encodeURIComponent(trackingId));
+    document.getElementById('pxUrl').textContent = pixelUrl;
+    document.getElementById('mediagoPixel').src = pixelUrl;
+  </script>
+</body>
+</html>

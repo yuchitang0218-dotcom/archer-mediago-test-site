@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thank You — Postback Demo</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 16px;line-height:1.6}
+    .box{border:1px solid #ddd;border-radius:12px;padding:18px;margin:12px 0}
+    code{background:#f7f7f7;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <h1>Conversion Complete — S2S Postback Flow</h1>
+  <p>This page simulates an affiliate/server postback. In production, your tracker/backend would call this URL server‑to‑server.</p>
+
+  <div class="box">
+    <h3>Postback firing</h3>
+    <p>Tracking ID detected: <code id="tid">N/A</code></p>
+    <p>Postback URL used: <code id="pbUrl">Please configure POSTBACK_URL_TEMPLATE in the HTML</code></p>
+    <!-- Using an IMG ensures a GET request without CORS issues -->
+    <img id="postbackImg" src="" alt="" style="display:none"/>
+  </div>
+
+  <div class="box">
+    <h3>How to use this page for a real test</h3>
+    <ol>
+      <li>From MediaGo, go to <strong>Conversion Tracking → S2S Postback</strong> and create a conversion.</li>
+      <li>Copy the postback URL template provided by MediaGo.</li>
+      <li>In this file, replace <code>POSTBACK_URL_TEMPLATE</code> with that template and keep the <code>{tracking_id}</code> placeholder.</li>
+      <li>Open this page with <code>?tracking_id=...</code>. The page will substitute the tracking id and call the postback automatically.</li>
+    </ol>
+  </div>
+
+  <script>
+    const sp = new URLSearchParams(location.search);
+    const trackingId = sp.get('tracking_id') || 'missing_tracking_id';
+    document.getElementById('tid').textContent = trackingId;
+
+    // TODO: Replace the template below with the real one from MediaGo S2S setup.
+    // Example (your real params may differ):
+    // const POSTBACK_URL_TEMPLATE = 'https://sync.mediago.io/api/bidder/postback?trackingid={tracking_id}&adid=100000&conversiontype=1&conversionprice=3.5&includeintotalconversion=1&accountname=my_account';
+    const POSTBACK_URL_TEMPLATE = 'https://sync.mediago.io/api/bidder/postback?trackingid={tracking_id}&adid=100000&conversiontype=1&conversionprice=3.5&includeintotalconversion=1&accountname=my_account';
+
+    const postbackUrl = POSTBACK_URL_TEMPLATE.replace('{tracking_id}', encodeURIComponent(trackingId));
+    document.getElementById('pbUrl').textContent = postbackUrl;
+    document.getElementById('postbackImg').src = postbackUrl;
+  </script>
+</body>
+</html>
