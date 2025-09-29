@@ -1,59 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Thank You — Pixel Demo</title>
+  <meta charset="UTF-8">
+  <title>Conversion Complete — Pixel Flow</title>
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 16px;line-height:1.6}
-    .box{border:1px solid #ddd;border-radius:12px;padding:18px;margin:12px 0}
-    code{background:#f7f7f7;padding:2px 6px;border-radius:6px}
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      line-height: 1.6;
+    }
+    code {
+      background: #f7f7f7;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .box {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 20px 0;
+    }
   </style>
 </head>
 <body>
   <h1>Conversion Complete — Pixel Flow</h1>
-  <p>This page simulates an advertiser's <em>thank‑you page</em> where a MediaGo <strong>pixel</strong> would fire.</p>
-
-<!-- ✅ MediaGo Pixel Code -->
-<script type='text/javascript'>
-    window._megoaa = window._megoaa || [];
-    window._megoaa.push({ type: 'event', name: 'pageview', acid: '31906'});
-    window._megoaa.push({ type: 'nextjump', link: ["yuchitang0218-dotcom.github.io"]});
-    !function (t, f, a, x) {
-            if (!document.getElementById(x)) {
-                t.async = 1; t.src = a; t.id=x; f.parentNode.insertBefore(t, f);
-            }
-    }(document.createElement('script'),
-    document.getElementsByTagName('script')[0], '//cdn.mediago.io/js/pixel.js?acid=31906', 'pixel_megoaa_script');
-</script>
-<noscript>
-    <img src='//trace.mediago.io/api/bidder/track/pixel/pageview?tn=f9f2b1ef23fe2759c2cad0953029a94b&acid=31906' width='0' height='0' style='display:none' />
-</noscript>
-<!-- ✅ End of MediaGo Pixel Code -->
+  <p>This is your <strong>Thank You Page</strong>. It shows the <code>tracking_id</code> and fires the MediaGo conversion pixel.</p>
 
   <div class="box">
-    <h3>How to use this page for a real test</h3>
-    <ol>
-      <li>From MediaGo, go to <strong>Conversion Tracking → Pixel</strong> and create a conversion.</li>
-      <li>Copy the pixel URL/snippet that MediaGo provides.</li>
-      <li>In this file, replace <code>PIXEL_URL_TEMPLATE</code> with your real pixel URL template (it should contain a placeholder <code>{tracking_id}</code>).</li>
-      <li>When opened with <code>?tracking_id=...</code>, this page will swap the placeholder and request the pixel URL automatically.</li>
-    </ol>
+    <h3>Tracking Info</h3>
+    <p>Tracking ID detected: <code id="tid">N/A</code></p>
+  </div>
+
+  <div class="box">
+    <h3>MediaGo Conversion Pixel</h3>
+    <p>If you see a request to <code>trace.mediago.io</code> in your browser Network panel, the pixel fired successfully.</p>
+
+    <!-- ✅ MediaGo Pixel Code -->
+    <script>
+      window._megoaa = window._megoaa || [];
+      window._megoaa.push({ 
+        type: 'event', 
+        name: 'test-archer', 
+        acid: '31906', 
+        pxd: '1433165177734820'
+      });
+    </script>
+    <noscript>
+      <img src='//trace.mediago.io/api/bidder/track/pixel/conversion?cvn=test-archer&acid=31906&pxd=1433165177734820&tn=f9f2b1ef23fe2759c2cad0953029a94b' 
+           width='0' height='0' style='display:none' />
+    </noscript>
+    <!-- ✅ End of MediaGo Pixel Code -->
   </div>
 
   <script>
+    // 从 URL 中提取 tracking_id 并显示出来
     const sp = new URLSearchParams(location.search);
     const trackingId = sp.get('tracking_id') || 'missing_tracking_id';
     document.getElementById('tid').textContent = trackingId;
-
-    // TODO: Replace the template below with the real one from MediaGo Pixel setup.
-    // Example form (your real URL may differ):
-    // const PIXEL_URL_TEMPLATE = 'https://YOUR-PIXEL-ENDPOINT?tracking_id={tracking_id}&event=signup';
-    const PIXEL_URL_TEMPLATE = 'https://YOUR-PIXEL-ENDPOINT?tracking_id={tracking_id}&event=signup';
-
-    const pixelUrl = PIXEL_URL_TEMPLATE.replace('{tracking_id}', encodeURIComponent(trackingId));
-    document.getElementById('pxUrl').textContent = pixelUrl;
-    document.getElementById('mediagoPixel').src = pixelUrl;
   </script>
 </body>
 </html>
